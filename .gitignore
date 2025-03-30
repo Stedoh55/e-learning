@@ -1,0 +1,7 @@
+#Environmental Variables
+elearning-env
+.env
+
+# Migrations
+__pycache__
+migrations/
