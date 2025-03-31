@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils.html import format_html
 from .models import User,Learner, Instructor
 from .models import Course,course_enrollment,Enroll_mode
 
@@ -23,7 +24,15 @@ class CourseAdmin(admin.ModelAdmin):
     list_display = ('name','image','description','pub_date','total_enrollment' )
     inlines = [course_enrollmentInline]
     search_fields = ['name', 'description']                 #Adding the serach field for the specified columns
-    list_filter = ['name','pub_date', 'total_enrollment']   #Adding the filtering functionality
+    # list_filter = ['name','pub_date', 'total_enrollment']   #Adding the filtering functionality
+
+    #Previewing the Uploaded image
+    def image_preview(self,obj):
+        if obj.image:
+            return format_html('<img src="{}" width="100" height="auto" style="border-radius: 5px;" />', obj.image.url)
+        return "(No Image)"
+    
+    image_preview.short_description = "Preview"
 
 
 
