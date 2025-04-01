@@ -9,6 +9,11 @@ h2{
     font-size: 20px;
     margin-top: 18px;
 }
+p{
+    font-size: 14px;
+    font-weight: 700;
+    font-family: Arial, Helvetica, sans-serif;
+}
 
 body{
      background-color: bisque;   
@@ -16,7 +21,7 @@ body{
 
 #course-title{
     color: blue;
-    font-size: 15;
+    font-size: 15px;
     margin: 2px;
     padding: 4px;
     border-radius: 8px;
@@ -25,7 +30,8 @@ body{
 
 #course-description{
     color: black;
-    font-size: 12;
+    font-size: 14px;
+    font-weight: 500;
     margin: 2px;
     margin-top: 6px;
     font-family: Arial, Helvetica, sans-serif;
@@ -40,14 +46,14 @@ body{
 .courses-list{
     display: grid;
     column-gap: 30px;
-    row-gap: 10px;
+    row-gap: 20px;
     grid-template-columns: repeat(3,1fr);
     
 }
 
 .course-capacity{
     margin: 2px;
-    font-size: 10px;
+    font-size: 14px;
     margin-top: 6px;
     font-family: Arial, Helvetica, sans-serif;  
 }

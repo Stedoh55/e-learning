@@ -29,10 +29,28 @@
             </div>
                 
             {% endfor %}
+        
         {% else %}
             <p>No Courses are available for now</p>
-        {% endif %}
+            
+        {% endif %}  
     </div>
+    {% if courses %}
+    <p>{{number}} Results Returned</p>
+
+    <div class="course-analytics">
+        <h2 style="color: red;">Courses Analytics</h2>
+        <p><span style="color: #008000; font-weight: 900; font-size: 16px;">✔</span> {{students}} Students Enrolled</p>
+        <p><span style="color: #008000; font-weight: 900; font-size: 16px;">✔</span> {{average}}+ Students on Average</p>
+        <p><span style="color: #008000; font-weight: 900; font-size: 16px;">✔</span> {{maximum_students}} Students in Maximum</p>
+        <p><span style="color: #008000; font-weight: 900; font-size: 16px;">✔</span> {{minimum_students}} Students in Minimum</p>
+    </div>
+    
+    {% else %}
+            <p>No Courses are available for now</p>
+            
+
+     {% endif %}  
     
 </body>
 </html>
