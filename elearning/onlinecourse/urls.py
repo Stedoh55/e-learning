@@ -5,4 +5,8 @@ urlpatterns = [
     path('', views.index, name='homepage'),
     path('courses/', views.course_list, name='courses'),
     path('courses/<int:pk>', views.CourseView.as_view(), name='courses-detail'),
+    path('login', views.login_request, name='login'),
+    path('dashboard', views.dashboard, name='dashboard'),
+    path('logout', views.logout_request, name='logout'),
+    path('signup', views.signup_request, name='signup'),
 ]

@@ -1,11 +1,14 @@
 from django.contrib import admin
 from django.utils.html import format_html
-from .models import User,Learner, Instructor
+from .models import CustomUser,Learner, Instructor
 from .models import Course,course_enrollment,Enroll_mode
 
 # Register your models here.
-class UserAdmin(admin.ModelAdmin):
-    list_display = ('id','first_name','last_name', 'dob')
+class CustomUserAdmin(admin.ModelAdmin):
+   
+    search_fields = ("email",'first_name','last_name')
+    ordering = ("-is_staff","first_name")
+    list_display = ('id','username', 'first_name','last_name','email','is_staff','is_active', 'dob')
 
 class InstructorAdmin(admin.ModelAdmin):
     list_display = ('user_id','occupation','social_link', )
@@ -18,7 +21,7 @@ class course_enrollmentAdmin(admin.ModelAdmin):
 
 class course_enrollmentInline(admin.StackedInline):
     model = course_enrollment
-    extra = 5
+    extra = 1
 
 class CourseAdmin(admin.ModelAdmin):
     list_display = ('name','image','description','pub_date','total_enrollment' )
@@ -36,10 +39,11 @@ class CourseAdmin(admin.ModelAdmin):
 
 
 
-admin.site.register(User,UserAdmin)
+admin.site.register(CustomUser,CustomUserAdmin)
 admin.site.register(Learner,LearnerAdmin)
 admin.site.register(Instructor,InstructorAdmin)
 admin.site.register(Course,CourseAdmin)
 admin.site.register(course_enrollment,course_enrollmentAdmin)
 admin.site.register(Enroll_mode)
+
 

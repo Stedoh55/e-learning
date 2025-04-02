@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Learning Login</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <h1>Welcome back</h1>
+    <p>Please Login to your account</p>
+    <form  method="post">
+        <div>
+            {% csrf_token %}
+            <label for="username"><b>User Name</b></label>
+            <input type="text" placeholder="Enter User Name" name="username" required>
+            <label for="psw"><b>User Name</b></label>
+            <input type="password" placeholder="Enter Password" name="psw" required>
+            <button class="login-signup-button" type="submit">Login</button>
+        </div>
+    </form>
+    <div class="error-messages">
+        {% if messages %}
+            {% for message in messages %}
+                <p style="color: red;">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+    </div>
+</body>
+</html>

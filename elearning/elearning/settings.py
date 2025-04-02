@@ -90,6 +90,13 @@ DATABASES = {
     }
 }
 
+# Authentication Backend System for Login form
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+# Let the Users be Updated from the signup form with other details
+AUTH_USER_MODEL = 'onlinecourse.CustomUser'
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
