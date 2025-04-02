@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.views import generic
 from .models import Course
 from django.db.models import Sum, Avg, Max, Min
 
@@ -27,4 +28,10 @@ def course_list(request):
 
     }
     return render(request, 'onlinecourse/courses.html', context)
+
+# Using Generic Views for easy request calls        (3 Steps)
+class CourseView(generic.DetailView):               #1: Extends detailview
+    model = Course                                  #2: Define model
+    template_name = 'onlinecourse/course_detail.html'     #3: Define template
+    context_object_name = 'course'
     
