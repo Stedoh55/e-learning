@@ -76,6 +76,10 @@ p{
    
 }
 
+.form-label{
+    font-weight: 700;
+}
+
 
 @media screen and (max-width: 768px){
   .courses-list{

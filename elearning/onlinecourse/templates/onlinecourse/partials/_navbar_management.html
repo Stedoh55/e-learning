@@ -42,49 +42,58 @@
                         <img class="d-block mx-auto my-auto" src="{% static 'icons/bell.svg' %}" alt="">
                         <p class="mb-0">Notification</p>
                     </div>
-                    <div id="signup-block" class="mx-3 my-auto" style="cursor: pointer;" onclick="linkTo('/login')">
+                    <div id="signup-block" class="mx-3 my-auto" style="cursor: pointer;" onclick="linkTo('../logout')">
                         <img class="d-block mx-auto" src="{% static 'icons/person-circle.svg' %}" alt="">
-                        <p class="mb-0">Sign in</p>
+                        <p class="mb-0">Sign out</p>
                     </div>
                     <div id="orders-block" class="mx-3 my-auto">
                         <img class="d-block mx-auto" src="{% static 'icons/journal-richtext.svg' %}" alt="">
                         <p class="mb-0">My Orders</p>
                     </div>
                     <div id="cart-block" class="ml-3 my-auto">
-                        <img class="d-block mx-auto" src="{% static 'icons/cart3.svg' %}" alt="">
-                        <p class="mb-0">Shopping Cart</p>
+                        <img class="d-block mx-auto" src="{% static 'icons/mortarboard.svg' %}" alt="">
+                        <p class="mb-0">Learners</p>
                     </div>
-
                 </div>
             </div>
-            <div id="navbar-links" class="d-flex justify-content-start ">
-                <div id="all-categories" class="mr-3 mt-2">
-                    <p class="mr-4 mt-1 mb-0 fs-8">All Categories</p>
+            <!-- All tabs navbar -->
+            <div id="navbar-links" class="d-flex justify-content-between ">
+                <div class="d-flex justify-content-start">
+                    <div id="all-categories" class="mr-3 mt-2">
+                        <p class="mr-4 mt-1 mb-0 fs-8">All Categories</p>
+                    </div>
+                    <div id="home" class="mr-3 mt-2" style="cursor: pointer;" onclick="linkTo('/')">
+                        <p class="mx-2 mt-1 mb-0 fs-8">Home</p>
+                    </div>
+                    <div id="Stores" class="mr-3 mt-2" style="cursor: pointer;" onclick="linkTo('/admin')">
+                        <p class="mx-2 mt-1 mb-0 fs-8">Admin Panel</p>
+                    </div>
+                    <div id="mega-menu" class="mr-3 mt-2" style="cursor: pointer;" onclick="linkTo('/courses')">
+                        <p class="mx-2 mt-1 mb-0 fs-8">All Courses</p>
+                    </div>
+                    <div id="pages" class="mr-3 mt-2">
+                        <p class="mx-2 mt-1 mb-0 fs-8">Assignments</p>
+                    </div>
+                    <div id="account" class="mr-3 mt-2">
+                        <p class="mx-2 mt-1 mb-0 fs-8">Account</p>
+                    </div>
+                    <div id="dashboard" class="mr-3 mt-2" style="cursor: pointer;" onclick="linkTo('/dashboard')">
+                        <p class="mx-2 mt-1 mb-0 fs-8">Progress</p>
+                    </div>
+                    <div id="docs" class="mr-3 mt-2">
+                        <p class="mx-2 mt-1 mb-0 fs-8">Docs</p>
+                    </div>
                 </div>
-                <div id="home" class="mr-3 mt-2" style="cursor: pointer;" onclick="linkTo('/')">
-                    <p class="mx-2 mt-1 mb-0 fs-8">Home</p>
+                <!-- Rignt side Components -->
+                <div class="d-flex justify-content-evenly">
+                    <div id="docs" class="mr-3 mt-2">
+                        <p class="mx-2 mt-1 mb-0 fs-8">{{user.first_name}} {{user.last_name}}</p>
+                    </div>
+                    <div id="docs" class="mr-3 mt-2">
+                        <p class="mx-2 mt-1 mb-0 fs-8 text-danger">{{current_datetime}} </p>
+                    </div>
                 </div>
-                <div id="Shop" class="mr-3 mt-2">
-                    <p class="mx-2 mt-1 mb-0 fs-8">Activity</p>
-                </div>
-                <div id="Stores" class="mr-3 mt-2">
-                    <p class="mx-2 mt-1 mb-0 fs-8">Study</p>
-                </div>
-                <div id="mega-menu" class="mr-3 mt-2" style="cursor: pointer;" onclick="linkTo('/courses')">
-                    <p class="mx-2 mt-1 mb-0 fs-8">Courses</p>
-                </div>
-                <div id="pages" class="mr-3 mt-2">
-                    <p class="mx-2 mt-1 mb-0 fs-8">Pages</p>
-                </div>
-                <div id="account" class="mr-3 mt-2">
-                    <p class="mx-2 mt-1 mb-0 fs-8">Account</p>
-                </div>
-                <div id="dashboard" class="mr-3 mt-2" style="cursor: pointer;" onclick="linkTo('/dashboard')">
-                    <p class="mx-2 mt-1 mb-0 fs-8">Dashboard</p>
-                </div>
-                <div id="docs" class="mr-3 mt-2">
-                    <p class="mx-2 mt-1 mb-0 fs-8">Docs</p>
-                </div>
+                
             </div>
         </section>
 

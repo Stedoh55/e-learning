@@ -6,8 +6,8 @@ from django.db.models import Sum, Avg, Max, Min
 from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
 from .forms import SignupForm
-from django.contrib.auth.models import User
 from .models import CustomUser
+
 
 # Create your views here.
 def index(request):
@@ -57,9 +57,10 @@ def login_request(request):
         if user is not None:
             messages.success(request, "Login successful!")
             login(request,user)
+            return redirect('dashboard')
            
         else:
-             return render(request, 'onlinecourse/pages/login.html',{"error_message": "Incorrect Username or Password."})
+            return render(request, 'onlinecourse/pages/login.html',{"error_message": "Incorrect Username or Password."})
           
     return render(request, 'onlinecourse/pages/login.html')
 
