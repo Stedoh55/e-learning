@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.utils.html import format_html
-from .models import CustomUser,Learner, Instructor
+from .models import CustomUser,Learner, Instructor, News_update
 from .models import Course,course_enrollment,Enroll_mode
 
 # Register your models here.
@@ -37,6 +37,10 @@ class CourseAdmin(admin.ModelAdmin):
     
     image_preview.short_description = "Preview"
 
+class News_updateAdmin(admin.ModelAdmin):
+    list_display = ('tag', 'create_time', 'visibility', 'duration', 'info')
+    search_fields = ("info",'tag',)
+    ordering = ("-create_time","tag")
 
 
 admin.site.register(CustomUser,CustomUserAdmin)
@@ -45,5 +49,6 @@ admin.site.register(Instructor,InstructorAdmin)
 admin.site.register(Course,CourseAdmin)
 admin.site.register(course_enrollment,course_enrollmentAdmin)
 admin.site.register(Enroll_mode)
+admin.site.register(News_update, News_updateAdmin)
 
 

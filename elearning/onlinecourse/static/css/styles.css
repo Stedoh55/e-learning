@@ -63,6 +63,7 @@ p{
     margin: 0;
 }
 
+/* The Sticky image in the Login and Sign Up page */
 .sign-sticky-image{
     position: sticky;
     top: 200px;
@@ -80,7 +81,11 @@ p{
     font-weight: 700;
 }
 
-
+/* The Top links of each Navbar */
+.top-links h2{
+    font-size: 12px;
+    margin-top: 0;
+}
 @media screen and (max-width: 768px){
   .courses-list{
     display: grid;

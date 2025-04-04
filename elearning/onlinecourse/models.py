@@ -77,6 +77,16 @@ class course_enrollment(models.Model):
 
     def __str__(self):
         return f"{self.course_id}"
+
+class News_update(models.Model):
+    tag = models.SlugField(max_length=50)
+    info = models.TextField(max_length=200)
+    visibility = models.BooleanField(default=True)
+    duration = models.PositiveIntegerField()
+    create_time =  models.DateTimeField(auto_now=True)
+    def __str__(self):
+        return f"{self.tag}"
+
    
 
 
