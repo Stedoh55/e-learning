@@ -23,6 +23,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Redirect URLs in Login And Logout
 LOGIN_REDIRECT_URL = '/dashboard'
 LOGOUT_REDIRECT_URL = ''
+LOGIN_URL = '/login/'  #For handling redirect for protected routes
 
 
 # Quick-start development settings - unsuitable for production

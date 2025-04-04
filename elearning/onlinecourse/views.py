@@ -8,6 +8,7 @@ from django.contrib import messages
 from .forms import SignupForm
 from .models import CustomUser
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
@@ -58,13 +59,15 @@ def login_request(request):
         if user is not None:
             messages.success(request, "Login successful!")
             login(request,user)
-            return redirect('dashboard')
+            next_url = request.POST.get('next') or request.GET.get('next')
+            return redirect(next_url or '../dashboard')
            
         else:
             return render(request, 'onlinecourse/pages/login.html',{"error_message": "Incorrect Username or Password."})
           
     return render(request, 'onlinecourse/pages/login.html')
 
+@login_required
 def dashboard(request):
     return render(request, 'onlinecourse/pages/dashboard.html')
 
@@ -119,10 +122,12 @@ def signup_request(request):
         return redirect('login')
     return render(request,'onlinecourse/pages/signup.html' )
 
+@login_required
 def course_management(request):
     return render(request, 'onlinecourse/pages/course_management.html')
 
 # Retrieve the list of learners in a system
+@login_required
 def learners_manager(request):
     learners = CustomUser.objects.filter(is_staff=False)
     # learners = learners.order_by('first_name')
