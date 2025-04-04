@@ -32,9 +32,12 @@
                     <h3>FreshCart</h3>
                 </div>
                 <!-- Search section -->
-                <div id="search-section" class="input-group align items-center my-auto border border-success rounded border-dark-subtle" style="width: 45vw; height: 40px;">
-                    <input type="text" class="form-control shadow" placeholder="Search for Products" aria-label="products search" aria-describedby="button-addon2">
-                    <button id="button-addon2" class="btn btn-success shadow" style="background-color: #1cdf1c;" type="button">Search</button>
+                <div id="search-section">
+                    <form method="get" action="{% url 'learners' %}" class="input-group align items-center my-auto border border-success rounded border-dark-subtle" style="width: 45vw; height: 40px;">
+                        <input type="text" name="q" class="form-control shadow" placeholder="Search for Learners" aria-label="products search" aria-describedby="button-addon2">
+                        <button  type="submit" id="button-addon2" class="btn btn-success shadow" style="background-color: #1cdf1c;">Search</button>
+                    </form>
+                    
                 </div>
                 <!-- Icons Panel -->
                 <div id="icons" class="d-flex py-0 justify-content-evenly">

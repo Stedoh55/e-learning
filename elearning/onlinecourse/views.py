@@ -7,6 +7,7 @@ from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
 from .forms import SignupForm
 from .models import CustomUser
+from django.db.models import Q
 
 
 # Create your views here.
@@ -120,3 +121,26 @@ def signup_request(request):
 
 def course_management(request):
     return render(request, 'onlinecourse/pages/course_management.html')
+
+# Retrieve the list of learners in a system
+def learners_manager(request):
+    learners = CustomUser.objects.filter(is_staff=False)
+    # learners = learners.order_by('first_name')
+    results_count = 0
+    query = request.GET.get('q')
+    if query:
+        results = CustomUser.objects.filter(
+            Q(first_name__icontains=query) |
+            Q(last_name__icontains=query) |
+            Q(email__icontains=query)
+        )
+        results_count = results.count()
+    else:
+        results = learners
+        results_count = results.count()
+    context = {
+        'learners': results,
+        'query': query,
+        'results_count': results_count
+    }
+    return render(request, 'onlinecourse/pages/learners.html', context)

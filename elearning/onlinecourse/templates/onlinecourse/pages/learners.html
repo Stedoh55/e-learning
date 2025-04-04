@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Learning | Learners</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <!-- Navbar -->
+    {% include '../partials/_navbar_learners.html' %}
+
+    <div class="container-fluid">
+        <div class="card mt-3">
+            <div class="card-header">
+                <h1>List of Learners in our Program</h1>
+            </div>
+            <!-- Table with the Learners data -->
+            <div class="card-body bg-light">
+                <section>
+                    <div>
+                        <p>Search, Filter and Sort Functionalities</p>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>S/N</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Email</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for learner in learners %}
+                            <tr>
+                                <td>{{forloop.counter}}</td>
+                                <td>{{learner.first_name}}</td>
+                                <td>{{learner.last_name}}</td>
+                                <td>{{learner.email}}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </section>
+            </div>
+            <!-- The Footer of the Table -->
+             <div class="card-footer flex justify-content-evenly">
+                {% if query %}
+                <p class="d-block">{{ results_count}} Results returned for the Search Keyword: "<span class="text-danger">{{query}}</span>"</p>
+                {% else %}
+                <p class="d-block">{{ results_count}} Results returned</p>
+                
+                {% endif %}
+             </div>
+        </div>
+    </div>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>
