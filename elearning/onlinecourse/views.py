@@ -104,11 +104,11 @@ def signup_request(request):
 
         #Basic Input Validation
         if password1 != password2:
-            return render(request, 'onlinecourse/pages/signup.html', {"signup_error_message": "Passwords do not match!"})
+            return render(request, 'onlinecourse/pages/signup.html', {"error_message": "Passwords do not match!"})
         if CustomUser.objects.filter(username=username).exists():
-            return render(request, 'onlinecourse/pages/signup.html', {"signup_error_message": "Username already taken!"})
+            return render(request, 'onlinecourse/pages/signup.html', {"error_message": "Username already taken!"})
         if CustomUser.objects.filter(email=email).exists():
-            return render(request, 'onlinecourse/pages/signup.html', {"signup_error_message": "User exists! Please Login"})
+            return render(request, 'onlinecourse/pages/signup.html', {"error_message": "User exists! Please Login"})
 
         #Create user
         user = CustomUser.objects.create_user(username=username, email=email, password=password1)
