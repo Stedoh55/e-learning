@@ -125,14 +125,16 @@
     </div>    
     </div>
 
-    <!-- Updated Tab for Notification messages -->
+    <!-- Updates Tab for Notification messages -->
+     {% if update %}
     <div class="corousel-container ">
         <div class="scrolling-wrapper" id="scrollingWords">
-            <p>Message 1 should be long enoughg so that when yo  see it you can appreciate hould be long enoughg so that when yo  see it you can appreciate</p><div style="color: #fff;">|</div>
-            <p>Message 2 is somewhat so</p><div style="color: #fff;">|</div>
-            <p>Message 3 should also</p>            
+            {% for message in update %}
+            <p>{{message.info }}</p><div style="color: #fff;">|</div>
+            {% endfor %}          
         </div>
     </div>
+    {% endif %}
 
 </section>
                         

@@ -5,29 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>E-Learning | Home</title>
     {% load static %}
+    <link rel="background-image" href="{% static 'images/home-background.jpeg' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
    
 </head>
-<body class="text-bg-warning">
+<body class="">
     <!-- Navbar -->
     {% include '../partials/_navbar_home.html' %}
 
-    <div class="container-fluid">
+    <div class="container-fluid mt-3">
         <!-- The Hero Section -->
-        <section class="pt-8">
-            Here is hard work required
+        <section class="card rounded" style="background-image: url('{% static background_image_path %}');">
+           <p style="height: 300px;">hero There</p>
         </section>
 
-        <!-- Other Cntents -->
-         <section>
-                These are misc contents
-         </section>
+       
+        
 
        
 
 
     </div>
+     <!-- Other Cntents -->
+         <div class="container-fluid  my-3">
+             <section class="card">
+                <div class="d-block " >
+                    <h2 class="">Features Courses</h2>
+                </div>
+         </section>
+         </div>
      <!--The Footer -->
     {% include '../partials/_footer.html' %}
       

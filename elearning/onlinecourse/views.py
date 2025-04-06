@@ -1,19 +1,22 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponseRedirect
 from django.views import generic
-from .models import Course
+from .models import Course, CustomUser, Dashboard_Update
 from django.db.models import Sum, Avg, Max, Min
 from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
 from .forms import SignupForm
-from .models import CustomUser
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
+from datetime import datetime
 
 
 # Create your views here.
 def index(request):
-    return render(request, 'onlinecourse/pages/index.html')
+    context = {
+        "background_image_path" : "images/home-background.jpeg"
+    }
+    return render(request, 'onlinecourse/pages/index.html', context)
 
 # def courses(request):
 #     return render(request, 'onlinecourse/courses.html')
@@ -69,7 +72,15 @@ def login_request(request):
 
 @login_required
 def dashboard(request):
-    return render(request, 'onlinecourse/pages/dashboard.html')
+    # notification = updates.objects.order_by('create_time')
+    current_time = datetime.now()
+    valid_time = Dashboard_Update.objects.filter(end_time__gt=current_time)
+    update = valid_time.filter(visibility=True)
+    context = {
+        "update" : update,
+        
+    }
+    return render(request, 'onlinecourse/pages/dashboard.html', context)
 
 def logout_request(request):
     logout(request)

@@ -1,6 +1,6 @@
 import os
 from django.db import models
-from datetime import datetime
+from datetime import datetime, timedelta
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.dispatch import receiver
 from django.db.models.signals import post_delete
@@ -77,15 +77,18 @@ class course_enrollment(models.Model):
 
     def __str__(self):
         return f"{self.course_id}"
-
-class News_update(models.Model):
+    
+# Automatic time set updates to the user's dashboard
+class Dashboard_Update(models.Model):
     tag = models.SlugField(max_length=50)
     info = models.TextField(max_length=200)
     visibility = models.BooleanField(default=True)
-    duration = models.PositiveIntegerField()
+    end_time = models.DateTimeField()
     create_time =  models.DateTimeField(auto_now=True)
+
     def __str__(self):
         return f"{self.tag}"
+
 
    
 
