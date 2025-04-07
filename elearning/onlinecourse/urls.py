@@ -11,5 +11,8 @@ urlpatterns = [
     path('logout', views.logout_request, name='logout'),
     path('signup', views.signup_request, name='signup'),
     path('learners', views.learners_manager, name='learners'),
+    path('learners/<int:pk>', views.LearnersInfo.as_view(), name='learners_details'),
+    path('learner/<int:pk>', views.LearnersUpdate, name='learners_update'),
+    path('learners/<int:learner_id>/delete', views.LearnersDelete, name='learners_delete'),
 ]
 

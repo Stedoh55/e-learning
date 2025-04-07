@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from django.http import HttpResponseRedirect
 from django.views import generic
 from .models import Course, CustomUser, Dashboard_Update
@@ -10,7 +10,8 @@ from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
 from django.utils import timezone
-
+from django.views.generic import DetailView, UpdateView, DeleteView, ListView
+from django.urls import reverse_lazy
 
 # Create your views here.
 def index(request):
@@ -49,6 +50,32 @@ class CourseView(generic.DetailView):               #1: Extends detailview
     model = Course                                  #2: Define model
     template_name = 'onlinecourse/pages/course_detail.html'     #3: Define template
     context_object_name = 'course'
+
+def LearnersUpdate(request,pk):
+    learner = get_object_or_404(CustomUser,id=pk)
+
+    if request.method == 'POST':
+        learner.name = request.POST.get('name', learner.name)
+        learner.email = request.POST.get('email', learner.email)
+        learner.save()
+        return redirect('learners_details', id=pk)
+    
+    return render(request, 'onlinecourse/pages/login.html', {'learner': learner})
+
+@login_required
+def LearnersDelete(request, learner_id):
+    learner = get_object_or_404(CustomUser,id=learner_id)
+
+    if request.method == 'POST':
+        learner.delete()
+        return redirect('learners')
+    return render(request, 'onlinecourse/pages/login.html')
+
+class LearnersInfo(DetailView):
+    model  = CustomUser
+    template_name = 'onlinecourse/pages/user.html'
+    context_object_name = 'learner'
+
     
 def login_request(request):
     if request.method == 'POST':
@@ -61,7 +88,7 @@ def login_request(request):
 
         #Check for Login Credentials
         if user is not None:
-            messages.success(request, "Login successful!")
+            # messages.success(request, "Login successful!")
             login(request,user)
             next_url = request.POST.get('next') or request.GET.get('next')
             return redirect(next_url or '../dashboard')
@@ -85,7 +112,7 @@ def dashboard(request):
 
 def logout_request(request):
     logout(request)
-    messages.success(request, "You have successful logged out!")
+    # messages.success(request, "You have successful logged out!")
     return redirect('homepage')
 
 # def signup_request(request):

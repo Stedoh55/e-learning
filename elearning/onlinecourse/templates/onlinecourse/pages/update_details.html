@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <!-- Navbar -->
+    {% include '../partials/_navbar_learners.html' %}
+
+    <div class="container-fluid mt-3">
+        <div class="card">
+            <div class="card-header">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h2> Account for {{learner.first_name}}</h2>
+                        <p>User Account Details</p>
+                    </div>
+                    <div class="">   
+                        <a class="btn btn-primary" href="{% url 'learners_details/?pk=learner.pk'  %}"> Edit Details</a>
+                    </div> 
+                </div>    
+            </div>
+
+            <section class="card-body d-block">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <div id="search-section" class="input-group align items-center mb-3 border border-success rounded border-dark-subtle" style="width: 35vw; height: 30px;">
+                    <div class="btn btn-success shadow" style="background-color: #1cdf1c; width: 110px;" >Full Name</div>
+                    <input type="text" class="form-control shadow" readonly value="{{learner.first_name}} {{learner.last_name}}">
+                </div>
+                <div id="search-section" class="input-group align items-center mb-3 border border-success rounded border-dark-subtle" style="width: 35vw; height: 30px;">
+                    <div class="btn btn-success shadow" style="background-color: #1cdf1c; width: 110px;" >Email</div>
+                    <input type="text" class="form-control shadow" readonly value="{{learner.email}}">
+                </div>
+                <div id="search-section" class="input-group align items-center mb-3 border border-success rounded border-dark-subtle" style="width: 35vw; height: 30px;">
+                    <div class="btn btn-success shadow" style="background-color: #1cdf1c; width: 110px;" >Username</div>
+                    <input type="text" class="form-control shadow" readonly value="{{learner.username}}">
+                </div>
+                    </div>
+                    <div>
+                    <div id="search-section" class="input-group align items-center mb-3 border border-success rounded border-dark-subtle" style="width: 35vw; height: 30px;">
+                        <div class="btn btn-success shadow" style="background-color: #1cdf1c; width: 110px;" >DOB</div>
+                        <input type="text" class="form-control shadow" readonly value="{{learner.dob}}">
+                    </div>
+                    <div id="search-section" class="input-group align items-center mb-3 border border-success rounded border-dark-subtle" style="width: 35vw; height: 30px;">
+                        <div class="btn btn-success shadow" style="background-color: #1cdf1c; width: 110px;" >Date Joined</div>
+                        <input type="text" class="form-control shadow" readonly value="{{learner.date_joined}}">
+                    </div>
+                    <div id="search-section" class="input-group align items-center mb-3 border border-success rounded border-dark-subtle" style="width: 35vw; height: 30px;">
+                        <div class="btn btn-success shadow" style="background-color: #1cdf1c; width: 110px;" >Is Active</div>
+                        <input type="text" class="form-control shadow" readonly value="{{learner.is_active}}">
+                    </div>
+                    </div>
+
+                </div>  
+               
+            </section>
+            <div class="card-body border">
+                <div class="card-subtitle text-muted " >Course Enrollment Details</div>
+               
+            </div>
+             <div class="card-body">Course</div>
+             
+           
+                
+               
+         
+            
+        </div>
+       
+    </div>   
+     <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>
