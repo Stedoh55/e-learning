@@ -9,6 +9,7 @@ from .forms import SignupForm
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
+from django.utils import timezone
 
 
 # Create your views here.
@@ -73,7 +74,7 @@ def login_request(request):
 @login_required
 def dashboard(request):
     # notification = updates.objects.order_by('create_time')
-    current_time = datetime.now()
+    current_time = timezone.now()
     valid_time = Dashboard_Update.objects.filter(end_time__gt=current_time)
     update = valid_time.filter(visibility=True)
     context = {
