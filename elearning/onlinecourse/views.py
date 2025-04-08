@@ -182,6 +182,7 @@ def learners_manager(request):
     else:
         results = learners
         results_count = results.count()
+        query = ''
     context = {
         'learners': results,
         'query': query,
