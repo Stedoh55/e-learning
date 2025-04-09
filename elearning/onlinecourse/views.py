@@ -12,6 +12,8 @@ from datetime import datetime
 from django.utils import timezone
 from django.views.generic import DetailView, UpdateView, DeleteView, ListView
 from django.urls import reverse_lazy
+import bleach
+from django.core.paginator import Paginator
 
 # Create your views here.
 def index(request):
@@ -51,16 +53,36 @@ class CourseView(generic.DetailView):               #1: Extends detailview
     template_name = 'onlinecourse/pages/course_detail.html'     #3: Define template
     context_object_name = 'course'
 
-def LearnersUpdate(request,pk):
-    learner = get_object_or_404(CustomUser,id=pk)
-
-    if request.method == 'POST':
-        learner.name = request.POST.get('name', learner.name)
-        learner.email = request.POST.get('email', learner.email)
-        learner.save()
-        return redirect('learners_details', id=pk)
+def LearnersUpdate(request,learner_id):
+    learner = get_object_or_404(CustomUser, id=learner_id)
     
-    return render(request, 'onlinecourse/pages/login.html', {'learner': learner})
+    if request.method == 'POST':
+        first_name = bleach.clean(request.POST.get("first_name")).capitalize()
+        last_name = bleach.clean(request.POST.get("last_name")).capitalize()
+        email = bleach.clean(request.POST.get("email")).lower()
+        username = bleach.clean(request.POST.get("username")).capitalize()
+
+        # Form Validation
+        used_usernames = CustomUser.objects.filter(username=username).exists()
+        used_emails = CustomUser.objects.filter(email=email).exists()
+
+
+        if used_usernames and learner != get_object_or_404(CustomUser, id=learner_id):
+            return render(request, 'onlinecourse/pages/signup.html', {"error_message": "Username already taken!"})
+        if used_emails and learner != get_object_or_404(CustomUser, id=learner_id):
+            return redirect('learners_details', learner.id)
+        else:
+
+            learner.first_name = first_name
+            learner.last_name = last_name
+            learner.email = email
+            learner.username = username
+            learner.save()
+        
+        
+        return redirect('learners_details', learner.id)
+    
+    return render(request, 'onlinecourse/pages/update_details.html', {'learner': learner})
 
 @login_required
 def LearnersDelete(request, learner_id):
@@ -115,28 +137,12 @@ def logout_request(request):
     # messages.success(request, "You have successful logged out!")
     return redirect('homepage')
 
-# def signup_request(request):
-#     if request.method == "POST":
-#         form = SignupForm(request.POST)
-#         if form.is_valid():
-#             user = form.save(commit=False)
-#             user.email = form.cleaned_data["email"]
-#             user.first_name = form.cleaned_data["first_name"]
-#             user.last_name = form.cleaned_data["last_name"]
-#             user.dob = form.cleaned_data["dob"]
-#             user.save()         #Save user instance
-#             messages.success(request, "Signup successful!")
-#             return HttpResponseRedirect("login")
-#     else:
-#         form = SignupForm()
-#     return render(request, "onlinecourse/pages/signup.html", {"form":form})
-
 def signup_request(request):
     if request.method == "POST":
-        first_name = request.POST.get("first_name")
-        last_name = request.POST.get("last_name")
-        email = request.POST.get("email")
-        username = request.POST.get("username")
+        first_name = request.POST.get("first_name").capitalize()
+        last_name = request.POST.get("last_name").capitalize()
+        email = request.POST.get("email").lower()
+        username = request.POST.get("username").capitalize()
         dob = request.POST.get("dob")
         password1 = request.POST.get("password1")
         password2 = request.POST.get("password2")
@@ -169,7 +175,10 @@ def course_management(request):
 @login_required
 def learners_manager(request):
     learners = CustomUser.objects.filter(is_staff=False)
-    # learners = learners.order_by('first_name')
+    learners = learners.order_by('first_name')
+    paginator = Paginator(learners, 3)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     results_count = 0
     query = request.GET.get('q')
     if query:
@@ -184,6 +193,7 @@ def learners_manager(request):
         results_count = results.count()
         query = ''
     context = {
+        'page_obj': page_obj,
         'learners': results,
         'query': query,
         'results_count': results_count

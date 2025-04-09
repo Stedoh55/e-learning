@@ -34,7 +34,8 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {% for learner in learners %}
+                            {% for learner in page_obj %}
+                           
                             <tr>
                                 <td>{{forloop.counter}}</td>
                                 <td>{{learner.first_name}}</td>
@@ -42,6 +43,7 @@
                                 <td>{{learner.email}}</td>
                                 <td><a href="{% url 'learners_details' learner.pk %}">About {{learner.first_name}}</a></td>
                             </tr>
+                            
                             {% endfor %}
                         </tbody>
                     </table>
@@ -52,28 +54,32 @@
                 {% if query %}
                 <p class="d-block">{{ results_count}} Results returned for the Search Keyword: "<span class="text-danger">{{query}}</span>"</p>
                 {% else %}
-                <p class="d-block">{{ results_count}} Results returned</p>
+                <p class="d-block">{{ results_count }} Results returned</p>
                 
                 {% endif %}
              </div>
 
              <!-- Adding Pagination to the Details List -->
-             <div class="pagination">
-                <form action="">
-                    {% csrf_token %}
-                    {% if learners.has_previous %}
-                <a href="?page=1">&laquo; first</a>
-                <a href="?page={{ learners.previous_page_number }}">previous</a>
+             <div aria-label=". . .">
+                <ul class="pagination pagination-sm justify-content-center">
+                
+                {% if page_obj.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page=1">&laquo; first</a></li>
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a></li>
+                
                 {% endif %}
 
-                <span>Page {{learners.number}} of {{ learners.paginator.num_pages }}</span>
+                <li class="page-item active" aria-current="page">
+                    <span class="page-link">page {{page_obj.number}} of {{ page_obj.paginator.num_pages }}</span>
+                </li>
 
-                {% if learners.has_next %}
-                <a href="?page={{ learners.previous_page_number }}">next</a>
-                <a href="?page={{ learners.paginator.num_pages }}">previous</a>
+                {% if page_obj.has_next %}
+                <li class="page-item"> <a class="page-link" href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a></li>
+                <li class="page-item"> <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a></li>
+               
                 {% endif %}
 
-                </form>
+            </ul>
                 
              </div>
         </div>
