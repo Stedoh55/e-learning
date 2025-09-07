@@ -1,0 +1,7 @@
+#Environmental Variables
+env
+.env
+
+# Migrations
+__pycache__
+migrations/
