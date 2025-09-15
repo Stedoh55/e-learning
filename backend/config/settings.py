@@ -28,6 +28,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# Custom User Model
+AUTH_USER_MODEL = "accounts.User"
 
 # Application definition
 DJANGO_APPS = [
@@ -44,7 +46,7 @@ THIRD_PARTY_APPS = [
     'corsheaders',
 ]
 CUSTOM_APPS = [
-    'learners',
+    'accounts',
     'courses',
 ]
 
@@ -143,3 +145,5 @@ CORS_ORIGIN_WHITELIST = (
     'http://localhost:8000',   #Django Localhost
     'http://localhost:5173',   #Vite Localhost
 )
+
+

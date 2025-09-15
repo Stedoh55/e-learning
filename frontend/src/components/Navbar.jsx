@@ -30,7 +30,7 @@ function Navbar() {
                     {/* Search section */}
                     <div id="search-section" className="input-group flex justify-start h-[40px] w-[45vw] rounded-[6px] shadow-sm shadow-[#212529] border-solid border-[0.5px] border-[#adb5bd]">
                         <input type="text" className="w-[85%] px-[8px] text-[16px] outline-0 border-0 overflow-hidden" placeholder="Search for Products" aria-label="products search" aria-describedby="button-addon2"/>
-                        <button id="button-addon2" className="text-white font-[700] text-[18px] bg-[#1cdf1c] w-[15%] h-full" type="button">Search</button>
+                        <button id="button-addon2" className="text-white font-[700] text-[18px] bg-[#1cdf1c] w-[15%] h-full active:scale-90 transition-all duration-100 ease-out" type="button">Search</button>
                     </div>
                     {/* Icons Panel */}
                     <div id="icons" className="flex py-0 justify-evenly">

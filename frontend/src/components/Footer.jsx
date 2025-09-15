@@ -40,7 +40,7 @@ function Footer() {
                     <h4 className="text-[14px] font-[700]">Subscribe to our mailing list</h4>
                     <div className="input-group mt-[8px] flex justify-start h-[40px] rounded-[6px] shadow-sm shadow-[#212529] border-solid border-[0.5px] border-[#adb5bd]">
                         <input type="text" className="w-[85%] px-[8px] text-[16px] outline-0 border-0 overflow-hidden" placeholder="Email" aria-label="products search" aria-describedby="button-addon2" />
-                        <button id="button-addon2" className="text-white text-[18px] bg-[#1cdf1c] w-[15%] h-full" type="button">JOIN</button>
+                        <button id="button-addon2" className="text-white text-[18px] bg-[#1cdf1c] w-[15%] h-full active:scale-90 transition-all duration-100 ease-out" type="button">JOIN</button>
                     </div>
                     <h2>CONNECT</h2>
                     <div className="flex justify-start mt-[4px]">
