@@ -44,6 +44,7 @@ DJANGO_APPS = [
 THIRD_PARTY_APPS = [
     'rest_framework',
     'corsheaders',
+    'rest_framework_simplejwt',
 ]
 CUSTOM_APPS = [
     'accounts',
@@ -145,5 +146,12 @@ CORS_ORIGIN_WHITELIST = (
     'http://localhost:8000',   #Django Localhost
     'http://localhost:5173',   #Vite Localhost
 )
+
+# DRF Configurations
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
 
 
