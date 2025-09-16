@@ -1,4 +1,6 @@
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
+import { redirect } from "react-router-dom"
 import Navbar from "../../components/Navbar"
 import Footer from "../../components/Footer"
 import SignUpImage from "../../assets/img/signup.jpeg"
@@ -11,6 +13,7 @@ function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
+    const navigate = useNavigate()     //For handling redirect after succssful login
 
     const [passwordToggle, setPasswordToggle] = useState(false);
     const handlePasswordToggle = () => {
@@ -30,7 +33,9 @@ function Login() {
             localStorage.setItem("access", response.data.access);
             localStorage.setItem("refresh", response.data.refresh);
 
-            alert("Login successful!")
+            // Navigating to dashboard Page
+            navigate("/dashboard")
+
         } catch (err) {
             setError("Invalid username or password");
         }

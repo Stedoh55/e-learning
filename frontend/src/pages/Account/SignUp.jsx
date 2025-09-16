@@ -1,6 +1,7 @@
 import Navbar from "../../components/Navbar"
 import Footer from "../../components/Footer"
 import SignUpImage from "../../assets/img/signup.jpeg"
+import { useNavigate } from "react-router-dom"
 import { Link } from "react-router-dom"
 import { LearnerSignup } from "../../services/AuthService"
 import { useState } from "react"
@@ -8,6 +9,7 @@ import { AiFillEyeInvisible } from "react-icons/ai";
 import { IoEye } from "react-icons/io5";
 
 function SignUp() {
+    const navigate = useNavigate()
     const [formData, setFormData] = useState({
         first_name: "",
         last_name: "",
@@ -30,6 +32,7 @@ function SignUp() {
         try {
             const result = await LearnerSignup(formData);
             setMessage("Account Successful Created")
+            navigate("/login")
         } catch (error) {
             setMessage(`Error: ${JSON.stringify(error)}`)
         }
