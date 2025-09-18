@@ -26,8 +26,6 @@ class LoginView(generics.GenericAPIView):
 
 # Retrieving the Details of Authenticated user from their Tokens
 class CurrentUserView(APIView):
-    # permission_classes = [IsAuthenticated]
-
     def get(self, request):
         serializer = UserSerializer(request.user)
         return Response(serializer.data)

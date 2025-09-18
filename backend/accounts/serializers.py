@@ -50,6 +50,7 @@ class LoginSerializer(serializers.ModelSerializer):
         return {
             "refresh": str(refresh),
             "access": str(refresh.access_token),
+            "role": user.role,
             "user": {
                 "id": user.id,
                 "username": user.username,

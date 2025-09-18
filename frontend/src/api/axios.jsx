@@ -8,4 +8,13 @@ const axiosInstance = axios.create({
     },
 });
 
+// Attaching the JWT to the Requests
+axiosInstance.interceptors.request.use((config) => {
+    const token = localStorage.getItem("access");
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+});
+
 export default axiosInstance;

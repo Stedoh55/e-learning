@@ -8,7 +8,7 @@ import moment from 'moment';
 
 function DashboardNavbar() {
     // Today's Date
-    const today = moment().format("dddd, MMMM D, YYYY");
+    const today = moment().format("dddd, Do of MMMM, YYYY");
 
      // Fetching the User data
         const [user, setUser] = useState(null);

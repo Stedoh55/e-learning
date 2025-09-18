@@ -26,8 +26,7 @@ h2{
     border-width: 1px;
     border-color: black;
     border-style: solid;
-
-    padding: 20px 12px;
+    padding: 12px 10px;
 }
 .testimony-grids{
     border-radius: 10px;
@@ -36,8 +35,6 @@ h2{
     border-style: solid;
     padding: 20px 12px;
 }
-
-
 
 .form-control{
     margin-top: 4px;

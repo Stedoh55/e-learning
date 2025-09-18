@@ -29,9 +29,15 @@ function Login() {
             });
             console.log(response.data);
 
+            // Clearing the previous local storage role data
+            localStorage.removeItem("role");
+
             // Save tokens in the localstorage
             localStorage.setItem("access", response.data.access);
             localStorage.setItem("refresh", response.data.refresh);
+
+            // Save the role in the localstorage
+            localStorage.setItem("role", response.data.role);
 
             // Navigating to dashboard Page
             navigate("/dashboard")
