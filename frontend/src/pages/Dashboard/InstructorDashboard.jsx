@@ -2,6 +2,7 @@ import DashboardNavbar from "../../components/DashboardNavbar";
 import Footer from "../../components/Footer"
 
 function InstructorDashboard() {
+    
     return (
         <section className="InstructorDashboard">
             <div>

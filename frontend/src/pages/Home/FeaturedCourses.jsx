@@ -25,7 +25,7 @@ function FeaturedCourses() {
                         <div className="course-grids flex justify-between relative" key={course.id}>
                 
                             <div className="w-[40%]  mr-[10px]">
-                                <p className="rounded-[8px] h-[100%] bg-green-500">Picture</p>
+                                <img src={course.cover} alt="" className="rounded-[8px] h-[100%]" />
                             </div>
                             <div>
                                 <h3 className="text-[18px] font-[700]">{course.name}</h3>
