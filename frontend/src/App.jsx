@@ -4,12 +4,13 @@ import Homepage from './pages/Home/HomePage'
 import SignUp from './pages/Account/SignUp'
 import Login from './pages/Account/Login'
 import './App.css'
-import Dashboard from './pages/Dashboard/Dashboard'
 import LearnerDashboard from './pages/Dashboard/LearnerDashboard'
 import InstructorDashboard from './pages/Dashboard/InstructorDashboard'
 import ManagerDashboard from './pages/Dashboard/ManagerDashboard'
 import CoursesCreation from './pages/Instructors/CoursesCreation'
 import CoursesList from './pages/Instructors/Courseslist'
+import Learners from './components/Learners'
+import AutoDashboard from './components/AutoDashboard'
 
 function App() {
  const role = localStorage.getItem("role")
@@ -20,15 +21,17 @@ function App() {
         <Route path='signup' element={<SignUp />} />
         <Route path='login' element={<Login />} />
 
-        {/*Role-based Dashboards */}
-        {role === "learner" && <Route path="/dashboard" element={<LearnerDashboard/>} />}
-        {role === "instructor" && <Route path="/dashboard" element={<InstructorDashboard />} />}
-        {role === "manager" && <Route path="/dashboard" element={<ManagerDashboard />} />}
+        <Route path='dashboard' element={<AutoDashboard />} />
 
-        {/* Default Dashboard */}
-        <Route path='dashboard' element={<Dashboard />} />
+        {/*Role-based Dashboards */}
+        {role === "learner" && <Route path="/dashboards" element={<LearnerDashboard/>} />}
+        {role === "instructor" && <Route path="/dashboards" element={<InstructorDashboard />} />}
+        {role === "manager" && <Route path="/dashboards" element={<ManagerDashboard />} />}
+
         <Route path='courses/create' element={<CoursesCreation />} />
         <Route path='courses' element={<CoursesList />} />
+        <Route path='learners' element={<Learners />} />
+
     </Routes>
     </BrowserRouter>
   )

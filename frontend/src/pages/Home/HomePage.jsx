@@ -10,7 +10,11 @@ function Homepage() {
             {/* Navbar */}
             <Navbar />
             <HomeHero />
-            <FeaturedCourses />
+            <div className="mx-[12px] mt-[16px]">
+                <h2 className="text-[18px] font-[700]">Top Picks for You</h2>
+                <FeaturedCourses />
+            </div>
+            
             <Testimonials/>
             <Footer/>
         </div>

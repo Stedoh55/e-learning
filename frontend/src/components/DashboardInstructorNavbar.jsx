@@ -6,7 +6,7 @@ import { useState, useEffect } from "react"
 import { getCurrentUser } from "../api/CurrentUser";
 import moment from 'moment';
 
-function DashboardNavbar() {
+function DashboardInstructorNavbar({activeTab, onChange}) {
     // Today's Date
     const today = moment().format("dddd, Do of MMMM, YYYY");
 
@@ -59,27 +59,27 @@ function DashboardNavbar() {
                             <LuNotebookText className=" text-[24px] font-[700] my-auto w-full" />
                             <p className="text-[16px] font-[700] mb-0">My Orders</p>
                         </div>
-                        <div id="Learners-block" class="mr-3 my-auto w-fit">
+                        <Link to='/learners' id="Learners-block" class="mr-3 my-auto w-fit">
                             <PiGraduationCap className=" text-[24px] font-[700] my-auto w-full" />
                             <p className="text-[16px] font-[700] mb-0">Learners</p>
-                        </div>
+                        </Link>
                     </div>
                 </div>
                 {/* Lower links */}
                 <div className="flex justify-between">
                 <div className="LowerLinks flex justify-start">
                     <div className="mr-3 mt-2">
-                        <Link to="/" className="navbar-lowerlinks">All Categories</Link>
+                        <Link to="/" className="navbar-lowerlinks">All Tasks</Link>
                     </div>
-                    <div className="mr-3 mt-2">
-                        <Link to="/" className="navbar-lowerlinks">Home</Link>
+                    <div className={`mr-3 mt-2 -mb-[8px] ${activeTab === 'instructor home' ? "text-red-600 bg-gray-200" : ""}`}>
+                        <p className={`navbar-lowerlinks px-[4px]`} onClick={() => onChange('instructor home')}>Home</p>
                     </div>
-                    <div className="mr-3 mt-2">
-                        <Link to="/" className="navbar-lowerlinks">Continuing</Link>
+                    <div className={`mr-3 mt-2 -mb-[8px] ${activeTab === 'course creation' ? "text-red-600 bg-gray-200" : ""}`}>
+                        <p className={`navbar-lowerlinks px-[4px]`} onClick={() => onChange('course creation')}>New Course</p>
                     </div>
                    
-                    <div className="mr-3 mt-2">
-                        <Link to="/" className="navbar-lowerlinks">Completed</Link>
+                    <div className={`mr-3 mt-2 -mb-[8px] ${activeTab === 'completed' ? "text-red-600 bg-gray-200" : ""}`}>
+                        <p className={`navbar-lowerlinks px-[4px]`} onClick={() => onChange('completed')}>Update Courses</p>
                     </div>
                     <div className="mr-3 mt-2">
                         <Link to="/" className="navbar-lowerlinks">All Courses</Link>
@@ -102,4 +102,4 @@ function DashboardNavbar() {
         </section>
     )
 }
-export default DashboardNavbar
+export default DashboardInstructorNavbar
