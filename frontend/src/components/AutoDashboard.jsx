@@ -5,6 +5,7 @@ import DashboardLearnerNavbar from "./DashboardLearnerNavbar";
 import LearnerDashboard from "../pages/Dashboard/LearnerDashboard";
 import InstructorDashboard from "../pages/Dashboard/InstructorDashboard";
 
+
 function AutoDashboard({ activeTab, setActiveTab }) {
    
     const role = localStorage.getItem('role')

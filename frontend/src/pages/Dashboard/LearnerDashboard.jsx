@@ -6,7 +6,8 @@ import ContinuingCourses from "../Learners/ContinuingCourses";
 import CompletedCourses from "../Learners/CompletedCourses";
 
 function LearnerDashboard() {
-    
+    const [activeTab, setActiveTab] = useState('instructor home')
+
     // Switch Logic to determine the page to return
     const renderContent = () => {
         switch (activeTab) {
@@ -15,14 +16,14 @@ function LearnerDashboard() {
             case 'completed':
                 return <CompletedCourses />;
             default:
-                return <div>Page not found</div>
+                return <div>Welcome Back Learner</div>
         }
     }
     return (
         <section className="LearnerDashboard">
             {/* Learner Dashboard with active tabs */}
             <div>
-                <DashboardLearnerNavbar activeTab={activeTab} onChange={setActiveTab}/>
+                <DashboardLearnerNavbar activeTab={activeTab} onChange={setActiveTab} />
             </div>
             
             {/* Learener dashboard page contents */}

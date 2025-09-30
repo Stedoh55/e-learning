@@ -9,8 +9,9 @@ import InstructorDashboard from './pages/Dashboard/InstructorDashboard'
 import ManagerDashboard from './pages/Dashboard/ManagerDashboard'
 import CoursesCreation from './pages/Instructors/CoursesCreation'
 import CoursesList from './pages/Instructors/Courseslist'
-import Learners from './components/Learners'
+import Learners from './pages/LearnersManagement/Learners'
 import AutoDashboard from './components/AutoDashboard'
+import LearnerDetails from './pages/LearnersManagement/LearnerDetails'
 
 function App() {
  const role = localStorage.getItem("role")
@@ -31,6 +32,8 @@ function App() {
         <Route path='courses/create' element={<CoursesCreation />} />
         <Route path='courses' element={<CoursesList />} />
         <Route path='learners' element={<Learners />} />
+        <Route path='learners/:id' element={<LearnerDetails />} />
+
 
     </Routes>
     </BrowserRouter>

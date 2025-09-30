@@ -1,12 +1,28 @@
 import AutoDashboard from "../../components/AutoDashboard";
 import Footer from "../../components/Footer"
+import ManagerHome from "../Admin/ManagerHome";
+import DashboardAdminNavbar from "../../components/DashboardAdminNavbar";
 
 function ManagerDashboard() {
     const [activeTab, setActiveTab] = useState('continuing')
+
+    // Switch Logic to determine the page to return
+    const renderContent = () => {
+        switch (activeTab) {
+            case 'course creation':
+                return < ManagerHome />;
+            default:
+                return <ManagerHome />
+        }
+    }
     return (
         <section className="ManagerDashboard">
             <div>
-                <AutoDashboard activeTab={activeTab} onChange={setActiveTab}/>
+                <DashboardAdminNavbar activeTab={activeTab} onChange={setActiveTab}/>
+            </div>
+            {/* Learener dashboard page contents */}
+            <div>
+                {renderContent()}
             </div>
             <div>Hello Manager</div>
 
