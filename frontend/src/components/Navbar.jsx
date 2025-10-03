@@ -25,7 +25,9 @@ function Navbar() {
                         <div>
                             <img src="" alt=""/>
                         </div>
-                        <h3 className="text-[33px] font-[700]">FreshCart</h3>
+                        <Link to="/">
+                            <h3 className="text-[33px] font-[700]">FreshCart</h3>
+                        </Link>
                     </div>
                     {/* Search section */}
                     <div id="search-section" className="input-group flex justify-start h-[40px] w-[45vw] rounded-[6px] shadow-sm shadow-[#212529] border-solid border-[0.5px] border-[#adb5bd]">

@@ -34,7 +34,16 @@ function SignUp() {
             setMessage("Account Successful Created")
             navigate("/login")
         } catch (error) {
-            setMessage(`Error: ${JSON.stringify(error)}`)
+            const dat = `${JSON.stringify(error)}`
+            const messages = []
+            for (const key in dat) {
+                if (Array.isArray(dat[key])) {
+                    errors[key].forEach((msg) => messages.push(msg));
+                } else {
+                    messages.push(dat[key])
+                }
+            }
+            setMessage(dat.errors || dat )
         }
     };
 
@@ -77,7 +86,7 @@ function SignUp() {
                                 </div>
                                 <div className="mb-3">
                                     <label for="email" class="form-label">Email</label>
-                                    <input type="email" class="form-control shadow border border-dark-subtle" placeholder="Eg. johndoe@gmail.com" name="email" value={formData.email} onChange={handleChange} required/>
+                                    <input type="email" class="form-control shadow border border-dark-subtle" placeholder="Eg. johndoe@gmail.com" name="email" value={formData.email} onChange={handleChange} required />
                                 </div>
                                 <div class="mb-3">
                                     <label for="username" class="form-label">Username</label>

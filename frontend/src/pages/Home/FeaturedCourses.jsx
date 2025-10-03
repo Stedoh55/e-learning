@@ -6,11 +6,13 @@ import { FaBookOpenReader, FaUserPen } from "react-icons/fa6";
 
 function FeaturedCourses() {
     const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         axiosInstance.get('/courses/courses')
             .then((response) => {
                 setData(response.data);
+                setLoading(false)
             })
             .catch((error) => {
                 console.error('Error Fetching data:', error);
@@ -21,7 +23,8 @@ function FeaturedCourses() {
             
             <div className="mt-[10px] grid grid-cols-3 gap-x-[30px] gap-y-[20px]">
                 
-                    {data.map(course => (
+                {loading ? Array.from({length: 3}).map((_, i) => <SkeletonCard key={i}/>)
+                    :data.map(course => (
                         <div className="course-grids flex justify-between relative" key={course.id}>
                 
                             <div className="w-[40%]  mr-[10px]">
@@ -35,7 +38,7 @@ function FeaturedCourses() {
                                 </div>
                                 <p className="mb-[34px] ">{course.description}</p>
 
-                                <div className="bottom group mb-[10px] bottom-0 absolute">
+                                <div className="bottomGroup mb-[10px] bottom-0 absolute">
                                 <div className="flex justify-start text-[10px] ">
                                     <p>{course.genre}<span className="mx-[2px] my-auto">.</span></p>
                                     <p>{course.language}<span className="mx-[2px] my-auto">.</span></p>
@@ -64,4 +67,26 @@ function FeaturedCourses() {
         </section>
     )
 }
+function SkeletonCard() {
+    return (
+        <div className="animate-pulse relative  flex justify-between h-[185px] course-grids">
+            <div className="w-[40%] bg-gray-400 rounded-[8px] mr-[10px]"/>
+            <div className="w-[60%]">
+                <div className="bg-gray-300 h-[40px] "></div>
+                <div className="bg-gray-200 h-[20px] mt-[12px]"></div>
+                <div className="bg-gray-200 h-[20px] mt-[12px]"></div>
+
+                <div className="mb-[10px] bottom-0 absolute">
+                    <div className="flex justify-start">
+                        <div className="bg-gray-300 rounded-[5px] mr-[10px] h-[25px] w-[50px]"></div>
+                        <div className="bg-gray-300 rounded-[5px] mr-[10px] h-[25px] w-[50px]"></div>
+                        <div className="bg-gray-300 rounded-[5px] mr-[10px] h-[25px] w-[50px]"></div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    )
+}
+
 export default FeaturedCourses
