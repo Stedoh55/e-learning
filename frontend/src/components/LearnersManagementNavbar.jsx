@@ -7,7 +7,7 @@ import { useState, useEffect } from "react"
 import { getCurrentUser } from "../api/CurrentUser";
 import moment from 'moment';
 
-function LearnersManagementNavbar({ activeTab, onChange }) {
+function LearnersManagementNavbar({ activeTab, onChange, search, setSearch }) {
     // Today's Date
     const today = moment().format("dddd, Do of MMMM, YYYY");
 
@@ -17,7 +17,7 @@ function LearnersManagementNavbar({ activeTab, onChange }) {
     useEffect(() => {
         getCurrentUser().then(setUser).catch(console.error);
     }, []);
-    if (!user) return <p>Loading...</p>
+    if (!user) return <p>Loading</p>
     return (
         <section className="Navbar sticky top-0 z-50 bg-white text-bg-light p-2 pd-4 border-solid border-[0.5px] border-[#adb5bd] mx-0 border-bottom">
             <div>
@@ -43,11 +43,13 @@ function LearnersManagementNavbar({ activeTab, onChange }) {
                             <h3 className="text-[33px] font-[700]">FreshCart</h3>
                         </Link>
                     </div>
-                    {/* Search section */}
+
+                    {/* Search Section for Users */}
                     <div id="search-section" className="input-group flex justify-start h-[40px] w-[45vw] rounded-[6px] shadow-sm shadow-[#212529] border-solid border-[0.5px] border-[#adb5bd]">
-                        <input type="text" className="w-[85%] px-[8px] text-[16px] outline-0 border-0 overflow-hidden" placeholder="Search for Learners" aria-label="products search" aria-describedby="button-addon2" />
+                        <input type="text" value={search} onChange={(e) => setSearch(e.target.value)} className="w-[85%] px-[8px] text-[16px] outline-0 border-0 overflow-hidden" placeholder="Search for Learners" aria-label="Learners search" aria-describedby="button-addon2" />
                         <button id="button-addon2" className="text-white font-[700] text-[18px] bg-[#1cdf1c] w-[15%] h-full active:scale-90 transition-all duration-100 ease-out" type="button">Search</button>
                     </div>
+
                     {/* Icons Panel */}
                     <div id="icons" className="flex py-0 justify-evenly">
                         <div id="notification-block" class="mr-3 my-auto w-fit">
@@ -97,7 +99,8 @@ function LearnersManagementNavbar({ activeTab, onChange }) {
 
                     </div>
                     <div className="flex justify-between  mt-2">
-                        <p className=" navbar-lowerlinks mr-3">{user.first_name} {user.last_name}</p>
+                        <p className=" navbar-lowerlinks mr-3">
+                            { user.first_name } {user.last_name}</p>
                         <p className="navbar-lowerlinks text-red-600">{today}</p>
                     </div>
                 </div>
@@ -105,4 +108,5 @@ function LearnersManagementNavbar({ activeTab, onChange }) {
         </section>
     )
 }
+
 export default LearnersManagementNavbar

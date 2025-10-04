@@ -43,6 +43,7 @@ DJANGO_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
+    'django_filters',   #For enebling filtering, serching and sorting
     'rest_framework',
     'corsheaders',
     'rest_framework_simplejwt',
@@ -154,6 +155,9 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
+    'DEFAULT_FILTER_BACKENDS':[          #For supporting fltering with Django Filters
+        'django_filters.rest_framework.DjangoFilterBackend',
+    ]         
 }
 
 # JWT Settings and Configurations

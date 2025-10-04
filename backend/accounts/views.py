@@ -1,9 +1,11 @@
-from rest_framework import generics,status
+from rest_framework import generics,status,filters
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from .models import User
 from .serializers import LearnerSerializer, InstructorSerializer, LoginSerializer, UserSerializer
+from django_filters.rest_framework import DjangoFilterBackend
+
 
 # Create your views here.
 # The Signup Views for the Learners and Instructors
@@ -35,10 +37,24 @@ class UserListCreateView(generics.ListCreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
+    filter_backends = [DjangoFilterBackend, filters.OrderingFilter, filters.SearchFilter]
+
+    # FIelds allowed for filtering
+    filterset_fields = ["email", "role"]
+
+    # Searching allowed across fields
+    search_fields = ["username", "email", "first_name", "last_name"]
+
+    # Ordering field
+    ordering_fields = ["first_name", "last_name","date_joined","username", "role"]
+    ordering = ["first_name"]
 
 # Retrieve, Update or Delete a Single user
 class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
+    
+
+    
 

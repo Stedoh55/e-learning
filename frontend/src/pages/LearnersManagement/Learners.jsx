@@ -1,40 +1,83 @@
 import LearnersManagementNavbar from "../../components/LearnersManagementNavbar"
 import axiosInstance from "../../api/axios"
 import { useState, useEffect } from "react"
-import { FcAbout } from "react-icons/fc"
+import { FcAbout, FcAlphabeticalSortingAz,FcAlphabeticalSortingZa } from "react-icons/fc"
 import { Link } from "react-router-dom"
 
 function Learners() {
     const [users, setUsers] = useState([]);
+    const [error, setError] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [search, setSearch] = useState("");
+    const [role, setRole] = useState("");
+    const [ordering, setOrdering] = useState("");
+    const params = {}
 
+    if (search) params.search = search;
+    if (ordering) params.ordering = ordering;
+    if (role) params.role = role;
+   
+    const fetchUsers = async () => {
+        try {
+            const response = await axiosInstance.get("accounts/users", {params})
+            setUsers(response.data);
+            setLoading(false);
+            timeoutTimer()
+           
+        } catch(error) {
+            console.error("Error fetching users:", error);
+        }
+    }
+
+    // Fetch users when search changes
     useEffect(() => {
-        axiosInstance.get("accounts/users")
-            .then((response) => {
-                setUsers(response.data);
-                setLoading(false);
-            })
-            .catch((error) => {
-                console.error("Error fetching users:", error);
-            }) 
-    }, [])
+        setError(false)
+        const delay = setTimeout(() => fetchUsers(), 400);
+        return () => clearTimeout(delay);
+        
+    },[search])
+
+    // Fetch users when ordering or role changes
+    useEffect(() => {
+        fetchUsers();
+    }, [ordering, role])
+    
+    // Changing ordering icons on onClick
+    const toggleOrdering = (field) => {
+        if (ordering === field) setOrdering("-" + field)  // Sort Descending
+        else setOrdering(field); // Sort Ascending
+    }
+
+    // Applying filter by role
+    const toggleFilter = (role) => {
+        setRole(role)  // Filter  by Role
+    }
+    // Let timeout timer
+    let timeoutTimer = setTimeout(() => {
+        if (loading) {
+            setError(true);
+            setLoading(false);
+        }
+
+    }, 5000)
+
 
     return (
         <section className="Learners">
-           <LearnersManagementNavbar/>
+           <LearnersManagementNavbar search={search} setSearch={setSearch}/>
             <div className="mx-[12px] ">
                 <div className="px-3 py-[10px]  mt-[16px] rounded-[10px] border-solid border-[1px]">
-                    <p className="text-[18px]  font-[700]">Our Learners</p>
+                    <p className="text-[18px]  font-[700]">Our User Accounts</p>
                 </div>
                 <div className="mt-[10px] flex justify-between">
                     <div className="flex justify-start space-x-[10px]">
-                        <div className="rounded-[6px] bg-green-400 hover:bg-green-600 my-auto mr-[20px]">
+                        <div onClick={() => toggleFilter("learner")} className="rounded-[6px] cursor-pointer bg-green-400 hover:bg-green-600 my-auto mr-[20px]">
                             <p className="my-0 px-[20px] py-[4px] font-[700]">Learners</p>
                         </div>
-                        <div className="rounded-[6px] bg-green-400 my-auto mr-[20px]">
+                        <div onClick={() => toggleFilter("instructor")} className="rounded-[6px] cursor-pointer bg-green-400 hover:bg-green-600 my-auto mr-[20px]">
                             <p className="my-0 px-[20px] py-[4px] font-[700]">Instructors</p>
                         </div>
-                        <div className="rounded-[6px] bg-green-400 my-auto mr-[20px]">
+                        <div onClick={() => toggleFilter("manager")} className={`rounded-[6px] cursor-pointer bg-green-400 hover:bg-green-600 my-auto mr-[20px]`}>
                             <p className="my-0 px-[20px] py-[4px] font-[700]">Managers</p>
                         </div>
                     </div>
@@ -47,33 +90,69 @@ function Learners() {
                         <table className="min-w-full  border-collapse border border-gray-300">
                             <thead className="font-[700] ">
                                 <tr className="bg-gray-200 rounded-[10px]">
-                                    <th className="text-start border border-gray-300 px-4 py-[4px]">First Name</th>
-                                    <th className="text-start border border-gray-300 px-4 py-[4px]">Last Name</th>
-                                    <th className="text-start border border-gray-300 px-4 py-[4px]">Username</th>
-                                    <th className="text-start border border-gray-300 px-4 py-[4px]">Role</th>
+                                    <th className="text-start border border-gray-300 px-4 py-[4px]">ID</th>
+                                    <th>
+                                        <div onClick={() => toggleOrdering("first_name")} className="cursor-pointer text-start border flex justify-start border-gray-300 px-4 py-[4px]">
+                                            <div>{ordering === "first_name" ? <FcAlphabeticalSortingZa className="h-full" /> : <FcAlphabeticalSortingAz className="h-full" />}</div>
+                                            <div>First Name</div>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div onClick={() => toggleOrdering("last_name")} className="cursor-pointer text-start border flex justify-start border-gray-300 px-4 py-[4px]">
+                                            <div>{ordering === "last_name" ? <FcAlphabeticalSortingZa className="h-full" /> : <FcAlphabeticalSortingAz className="h-full" />}</div>
+                                            <div className="leading-auto">Last Name</div>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div onClick={() => toggleOrdering("username")} className="cursor-pointer text-start border flex justify-start border-gray-300 px-4 py-[4px]">
+                                            <div>{ordering === "username" ? <FcAlphabeticalSortingZa className="h-full" /> : <FcAlphabeticalSortingAz className="h-full" />}</div>
+                                            <div>Username</div>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div onClick={() => toggleOrdering("role")} className="cursor-pointer text-start border flex justify-start border-gray-300 px-4 py-[4px]">
+                                            <div>{ordering === "role" ? <FcAlphabeticalSortingZa className="h-full" /> : <FcAlphabeticalSortingAz className="h-full" />}</div>
+                                            <div>Role</div>
+                                        </div>
+                                    </th>
                                     <th className="text-start border border-gray-300 px-4 py-[4px]">Email</th>
                                     <th className="text-start border border-gray-300 px-4 py-[4px]">About</th>
                                 </tr>
                             </thead>
                             <tbody className="font-[500]">
-                                {loading ? Array.from({ length:10}).map((_, i) => <SkeletonLearners key={i} />)
-                                    :users.map((user) => (
-                                    <tr key={user.id} className="hover:bg-gray-200">
-                                        <td className="text-start border border-gray-300 px-4 py-[4px]">{ user.first_name}</td>
-                                        <td className="text-start border border-gray-300 px-4 py-[4px]">{ user.last_name}</td>
-                                        <td className="text-start border border-gray-300 px-4 py-[4px]">{ user.username}</td>
-                                        <td className="text-start border border-gray-300 px-4 py-[4px] capitalize">{ user.role}</td>
-                                        <td className="text-start border border-gray-300 px-4 py-[4px]">{user.email}</td>
-                                        <td className="text-center border border-gray-300 px-4 py-[4px]">
-                                            <Link to={`/learners/${user.id}`} className="flex justify-start text-blue-600 hover:underline">
-                                                <FcAbout className="my-auto mr-[2px]"/>
-                                                <p>{ user.username}</p>
-                                            </Link>
-                                        </td>
-                                    </tr>
-                                ))} 
+                                {loading ? Array.from({ length: 10 }).map((_, i) => <SkeletonUsers key={i} />)
+                                    : users.map((user, index) => (
+                                        <tr key={user.id} className="hover:bg-gray-200">
+                                            <td className="text-start border border-gray-300 px-4 py-[4px]">{index + 1}</td>
+                                            <td className="text-start border border-gray-300 px-4 py-[4px]">{user.first_name}</td>
+                                            <td className="text-start border border-gray-300 px-4 py-[4px]">{user.last_name}</td>
+                                            <td className="text-start border border-gray-300 px-4 py-[4px]">{user.username}</td>
+                                            <td className="text-start border border-gray-300 px-4 py-[4px] capitalize">{user.role}</td>
+                                            <td className="text-start border border-gray-300 px-4 py-[4px]">{user.email}</td>
+                                            <td className="text-center border border-gray-300 px-4 py-[4px]">
+                                                <Link to={`/learners/${user.id}`} className="flex justify-start text-blue-600 hover:underline">
+                                                    <FcAbout className="my-auto mr-[2px]" />
+                                                    <p>{user.username}</p>
+                                                </Link>
+                                            
+                                            </td>
+                                        
+                                        </tr>
+                                    ))}
+                               
                             </tbody>
+                           
                         </table>
+                        {/* handling Loading Error After 5seconds */}
+                        {(error && !loading && users.length === 0) ? (<div className="text-center mt-[6px]">
+                            <p>Error fetching results</p>
+                            <button onClick={() => {
+                                fetchUsers();
+                                setLoading(true);
+                                setError(false);
+                            }} className="bg-gray-300 py-[4px] px-[20px] mt-[8px] rounded-[10px]">Reload</button>
+                        </div>) : ""} 
+                        {(users.length === 0 && !loading && !error) ? (<p className="text-center mt-[6px]">No results found for "{search}"</p>) : ""} 
                     </div>
                     <div className="flex justify-start space-x-[30px] font-[500] text-[14px]">
                         
@@ -86,7 +165,7 @@ function Learners() {
     )    
 }
 
-function SkeletonLearners() {
+function SkeletonUsers() {
     return (
         <tr className="h-[29px] animate-pulse my-[10px]">
             <td className="text-start bg-gray-300 border-y-[10px] border-x-[4px] border-gray-100 px-4 py-[ppx]"></td>
@@ -95,7 +174,17 @@ function SkeletonLearners() {
             <td className="text-start bg-gray-300 border-y-[10px] border-x-[4px] border-gray-100 px-4 py-[4px]"></td>
             <td className="text-start bg-gray-300 border-y-[10px] border-x-[4px] border-gray-100 px-4 py-[4px]"></td>
             <td className="text-start bg-gray-300 border-y-[10px] border-x-[4px] border-gray-100 px-4 py-[4px]"></td>
+            <td className="text-start bg-gray-300 border-y-[10px] border-x-[4px] border-gray-100 px-4 py-[4px]"></td>
         </tr>
+    )
+}
+
+function sortingHeader() {
+    return (
+            <div onClick={() => toggleOrdering("first_name")} className="text-start border flex justify-start border-gray-300 px-4 py-[4px]">
+                <div>{ordering === "first_name" ? <FcAlphabeticalSortingZa className="my-auto" /> : <FcAlphabeticalSortingAz className="my-auto" />}</div>
+                <div>First Name</div>
+            </div>
     )
 }
 
