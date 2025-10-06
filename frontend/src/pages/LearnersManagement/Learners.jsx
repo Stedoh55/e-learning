@@ -1,6 +1,6 @@
 import LearnersManagementNavbar from "../../components/LearnersManagementNavbar"
 import axiosInstance from "../../api/axios"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { FcAbout, FcAlphabeticalSortingAz,FcAlphabeticalSortingZa } from "react-icons/fc"
 import { Link } from "react-router-dom"
 import * as XLSX from "xlsx";
@@ -14,6 +14,8 @@ function Learners() {
     const [role, setRole] = useState("");
     const [ordering, setOrdering] = useState("");
     const params = {}
+    const [open, setOpen] = useState(false);
+    const dropDownRef = useRef(null);
 
     if (search) params.search = search;
     if (ordering) params.ordering = ordering;
@@ -98,6 +100,21 @@ function Learners() {
         saveAs(fileData, "E-Learning users.xlsx");
     };
 
+    // Adding Dropdown for the Export button
+    function DropdownExport() {
+
+        // Close dropdown when clicking outside
+        useEffect(() => {
+            function handleClickOutside(event) {
+                if (dropDownRef.current && !dropDownRef.current.contains(event.target)) {
+                    setOpen(false);
+                }
+            }
+            document.addEventListener("mousedown", handleClickOutside);
+            return () => document.removeEventListener("mousedown", handleClickOutside);
+        }, [])
+    }
+
     return (
         <section className="Learners">
            <LearnersManagementNavbar search={search} setSearch={setSearch}/>
@@ -120,9 +137,16 @@ function Learners() {
                             <p className="my-0 px-[20px] py-[4px] font-[700]">Managers</p>
                         </div>
                     </div>
-                    <div onClick={exportToExcel} className="rounded-[6px] bg-blue-400 my-auto cursor-pointer" title="Download excel file">
+                    <div onClick={() => setOpen((prev) => !prev)} className="rounded-[6px] bg-blue-400 my-auto cursor-pointer relative" ref={dropDownRef} >
                         <p className="my-0 px-[20px] py-[4px] font-[700]">Export to file</p>
+                        {open && (
+                            <div className={` ${open? "translate-y-0 opacity-100 max-h-60" : "-translate-y-2 max-h-0 opacity-0"} absolute mt-[4px] py-[6px] px-[6px] text-[10px] rounded-[6px] w-full bg-white border shadow-lg`}>
+                                <div onClick={exportToExcel} title="Download excel file" className="hover:bg-blue-400">Export as Excel</div>
+                                <div className="hover:bg-blue-400">Export as CVS</div>
+                            </div>
+                        )}
                     </div>
+                    
                 </div>
                 <div className="px-3 py-2 mt-[16px] rounded-[10px] border-solid border-[1px]">
                     <div className="font-[700] text-[14px] overflow-x-auto w-[100%]">
@@ -217,14 +241,4 @@ function SkeletonUsers() {
         </tr>
     )
 }
-
-function sortingHeader() {
-    return (
-            <div onClick={() => toggleOrdering("first_name")} className="text-start border flex justify-start border-gray-300 px-4 py-[4px]">
-                <div>{ordering === "first_name" ? <FcAlphabeticalSortingZa className="my-auto" /> : <FcAlphabeticalSortingAz className="my-auto" />}</div>
-                <div>First Name</div>
-            </div>
-    )
-}
-
 export default Learners
