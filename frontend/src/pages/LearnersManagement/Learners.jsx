@@ -3,6 +3,8 @@ import axiosInstance from "../../api/axios"
 import { useState, useEffect } from "react"
 import { FcAbout, FcAlphabeticalSortingAz,FcAlphabeticalSortingZa } from "react-icons/fc"
 import { Link } from "react-router-dom"
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
 
 function Learners() {
     const [users, setUsers] = useState([]);
@@ -56,11 +58,45 @@ function Learners() {
     let timeoutTimer = setTimeout(() => {
         if (loading) {
             setError(true);
-            setLoading(false);
-        }
+            setLoading(false);     }
 
     }, 5000)
 
+    // Exporting data to Excel
+    const exportToExcel = () => {
+        // Limiting the Export of empty Excel file
+        if (!users || users.length === 0) {
+            alert("No user data available to export.");
+            return;
+        }
+
+        // Defining the worksheet data
+        const worksheetData = users.map((user, index) => ({
+            ID: index + 1,   // Adding the index number for the data rows
+            "First name": user.first_name,
+            "Last name": user.last_name,
+            Username: user.username,
+            Role: user.role,
+            Email: user.email,
+        }))
+
+        // Create a worksheet
+        const worksheet = XLSX.utils.json_to_sheet(worksheetData);
+
+        // Create a workbook and add worksheet
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "users");
+
+        // Wtite to buffer
+        const exelBuffer = XLSX.write(workbook, {
+            bookType: "xlsx",
+            type: "array",
+        })
+
+        // Save file
+        const fileData = new Blob([exelBuffer], { type: "application/octet-stream" });
+        saveAs(fileData, "E-Learning users.xlsx");
+    };
 
     return (
         <section className="Learners">
@@ -71,17 +107,20 @@ function Learners() {
                 </div>
                 <div className="mt-[10px] flex justify-between">
                     <div className="flex justify-start space-x-[10px]">
-                        <div onClick={() => toggleFilter("learner")} className="rounded-[6px] cursor-pointer bg-green-400 hover:bg-green-600 my-auto mr-[20px]">
+                        <div onClick={() => toggleFilter("")} className={`${role === "" ? "bg-[#f00] text-white" :"bg-[#1cdf1c]"} rounded-[6px] cursor-pointer my-auto mr-[20px]`} title="All Users">
+                            <p className="my-0 px-[20px] py-[4px] font-[700]">All Users</p>
+                        </div>
+                        <div onClick={() => toggleFilter("learner")} className={`${role === "learner" ? "bg-[#f00] text-white" : "bg-[#1cdf1c]"} rounded-[6px] cursor-pointer my-auto mr-[20px]`} title="Sort Learners">
                             <p className="my-0 px-[20px] py-[4px] font-[700]">Learners</p>
                         </div>
-                        <div onClick={() => toggleFilter("instructor")} className="rounded-[6px] cursor-pointer bg-green-400 hover:bg-green-600 my-auto mr-[20px]">
+                        <div onClick={() => toggleFilter("instructor")} className={`${role === "instructor" ? "bg-[#f00] text-white" : "bg-[#1cdf1c]"} rounded-[6px] cursor-pointer my-auto mr-[20px]`} title="Sort Instrutors" >
                             <p className="my-0 px-[20px] py-[4px] font-[700]">Instructors</p>
                         </div>
-                        <div onClick={() => toggleFilter("manager")} className={`rounded-[6px] cursor-pointer bg-green-400 hover:bg-green-600 my-auto mr-[20px]`}>
+                        <div onClick={() => toggleFilter("manager")} className={`${role === "manager" ? "bg-[#f00] text-white" : "bg-[#1cdf1c]"} rounded-[6px] cursor-pointer my-auto mr-[20px]`} title="Sort Managers">
                             <p className="my-0 px-[20px] py-[4px] font-[700]">Managers</p>
                         </div>
                     </div>
-                    <div className="rounded-[6px] bg-green-400 my-auto">
+                    <div onClick={exportToExcel} className="rounded-[6px] bg-blue-400 my-auto cursor-pointer" title="Download excel file">
                         <p className="my-0 px-[20px] py-[4px] font-[700]">Export to file</p>
                     </div>
                 </div>
