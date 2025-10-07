@@ -139,12 +139,12 @@ function Learners() {
                     </div>
                     <div onClick={() => setOpen((prev) => !prev)} className="rounded-[6px] bg-blue-400 my-auto cursor-pointer relative" ref={dropDownRef} >
                         <p className="my-0 px-[20px] py-[4px] font-[700]">Export to file</p>
-                        {open && (
-                            <div className={` ${open? "translate-y-0 opacity-100 max-h-60" : "-translate-y-2 max-h-0 opacity-0"} absolute mt-[4px] py-[6px] px-[6px] text-[10px] rounded-[6px] w-full bg-white border shadow-lg`}>
+                        
+                            <div className={` ${open? "translate-y-0 opacity-100 max-h-60" : "-translate-y-2 max-h-0 opacity-0"} absolute transition-all duration-300 ease-in-out py-[6px] px-[6px] text-[10px] rounded-[6px] w-full bg-white border shadow-lg`}>
                                 <div onClick={exportToExcel} title="Download excel file" className="hover:bg-blue-400">Export as Excel</div>
                                 <div className="hover:bg-blue-400">Export as CVS</div>
                             </div>
-                        )}
+                    
                     </div>
                     
                 </div>
