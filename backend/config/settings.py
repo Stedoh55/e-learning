@@ -172,4 +172,6 @@ SIMPLE_JWT = {
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR/'media'
 
-
+# Limiting the size of file uploads
+DATA_UPLOAD_MAX_MEMORY_SIZE = 52428800 #50MB
+FILE_UPLOAD_MAX_MEMORY_SIZE = 52428800

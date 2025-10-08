@@ -20,7 +20,7 @@ class Course(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="Author", null=True)
     name = models.CharField(max_length=255)
     description = models.TextField()
-    cover = models.ImageField(upload_to='courses/covers/', null=True)
+    cover = models.ImageField(upload_to='courses/covers/', null=True) #Upload to the Course Covers directory
     genre = models.CharField(max_length=20, choices=GENRE_CHOICES, default="technology")
     language = models.CharField(max_length=20, choices=LANGUAGE_CHOICES, default="en")
     duration = models.IntegerField(default=1)
@@ -30,12 +30,27 @@ class Course(models.Model):
     def __str__(self):
         return self.name
 
-# Demo Courses Comprising the file uploads (Cover Image)
-class CourseDemo(models.Model):
-    name = models.CharField(max_length=50)
-    details = models.TextField()
-    cover = models.ImageField(upload_to='courses/covers/') #Upload to the Course Covers directory
+class Content(models.Model):
+    CONTENT_TYPES = [
+        ('video', 'Video'),
+        ('text','Text'),
+    ]
+
+    course = models.ForeignKey(Course, related_name='contents', on_delete=models.CASCADE)
+    order = models.PositiveBigIntegerField(default=0)
+    week = models.PositiveBigIntegerField(default=1)
+    content_type = models.CharField(max_length=10, choices=CONTENT_TYPES)
+    title = models.CharField(max_length=255, blank=True)
+    
+    # Common fields
+    duration = models.DurationField(blank=True, null=True) 
+    video_file = models.FileField(blank=True, null=True, upload_to="courses/contents/")
+    text_body = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        ordering = ['order']
+
     def __str__(self):
-        return self.name
+        return f"{self.title}"
+    

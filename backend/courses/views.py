@@ -1,9 +1,9 @@
 from rest_framework.views import APIView
-from rest_framework import viewsets
+from rest_framework import generics
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
-from .models import Course
-from .serializers import CourseSerializer
+from .models import Course, Content
+from .serializers import CourseSerializer, ContentSerializer
 
 # Create your views here.
 class AllCourses(APIView):
@@ -18,3 +18,30 @@ class AllCourses(APIView):
             serializer.save()
             return Response(serializer.data, status=201)
         return Response(serializer.errors, status=400)
+
+class CourseDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Course.objects.all()
+    serializer_class = CourseSerializer
+    
+# Retrieving the Contents for the course
+class ContentListCreateView(generics.ListCreateAPIView):
+    serializer_class = ContentSerializer
+
+    def get_queryset(self):
+        """Return all contents for a specific course"""
+        course_id = self.kwargs['course_id']
+        return Content.objects.filter(course_id=course_id).order_by('order')
+    
+    def perform_create(self, serializer):
+        """Attach the contents to the correct course on creation"""
+        course_id = self.kwargs['course_id']
+        serializer.save(course_id=course_id)
+
+# Retrieve, Update and Delete single Content
+class ContentDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Content.objects.all()
+    serializer_class = ContentSerializer
+
+    
+
+    

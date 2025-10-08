@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Course
+from .models import Course, Content
 import pytz
 
 class CourseSerializer(serializers.ModelSerializer):
@@ -26,3 +26,27 @@ class CourseSerializer(serializers.ModelSerializer):
             return request.build_absolute_uri(obj.cover.url)
         return obj.cover.url if obj.cover else None
     
+class ContentSerializer(serializers.ModelSerializer):
+    video_file = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Content
+        fields = [
+            'id', 'content_type', 'title', 'text_body', 'video_file', 'duration', 'order', 'week'
+        ]
+        extra_kwargs = {
+            'video_file': {'required': False, 'allow_null':True}
+        }
+    
+    # Build the Absolute links for the video files
+    def get_video_file(self, obj):
+        request = self.context.get('request')
+        if request and obj.video_file:
+            return request.build_absolute_uri(obj.video_file.url)
+        return obj.video_file.url if obj.video_file else None
+    
+    #Validate the Uploaded media file for the Supported Format
+    def validate_video_file(self, value):
+        if value and not value.name.lower().endswith(('.mp4', '.mov', '.mkv')):
+            raise serializers.ValidationError("Unsuported video format.")
+        return value 
