@@ -5,6 +5,8 @@ import { FcAbout, FcAlphabeticalSortingAz,FcAlphabeticalSortingZa } from "react-
 import { Link } from "react-router-dom"
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
+import { Page, Text, View, Document, StyleSheet,pdf, PDFViewer, PDFDownloadLink, Image } from "@react-pdf/renderer"
+import ExportPDF from "../../components/ExportPDF"
 
 function Learners() {
     const [users, setUsers] = useState([]);
@@ -115,6 +117,23 @@ function Learners() {
         }, [])
     }
 
+    // Export the Users to PDF file
+    const handleDownloadPDF = async () => {
+        const blob = await pdf(
+            <ExportPDF users={users} />
+        ).toBlob();
+
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = 'E-learning users.pdf';
+        a.click();
+        URL.revokeObjectURL(url);
+    };
+       
+        
+    
+
     return (
         <section className="Learners">
            <LearnersManagementNavbar search={search} setSearch={setSearch}/>
@@ -143,6 +162,7 @@ function Learners() {
                             <div className={` ${open? "translate-y-0 opacity-100 max-h-60" : "-translate-y-2 max-h-0 opacity-0"} absolute transition-all duration-300 ease-in-out py-[6px] px-[6px] text-[10px] rounded-[6px] w-full bg-white border shadow-lg`}>
                                 <div onClick={exportToExcel} title="Download excel file" className="hover:bg-blue-400">Export as Excel</div>
                                 <div className="hover:bg-blue-400">Export as CVS</div>
+                                <div onClick={handleDownloadPDF} className="hover:bg-blue-400">Export as PDF</div>
                             </div>
                     
                     </div>
