@@ -18,6 +18,7 @@ function Learners() {
     const params = {}
     const [open, setOpen] = useState(false);
     const dropDownRef = useRef(null);
+    const [activeUser, setActiveUser] = useState("");
 
     if (search) params.search = search;
     if (ordering) params.ordering = ordering;
@@ -25,7 +26,10 @@ function Learners() {
    
     const fetchUsers = async () => {
         try {
-            const response = await axiosInstance.get("accounts/users", {params})
+            const response = await axiosInstance.get("accounts/users", { params })
+            const account = await axiosInstance.get("accounts/profile");
+
+            setActiveUser(account.data)
             setUsers(response.data);
             setLoading(false);
             timeoutTimer()
@@ -120,7 +124,7 @@ function Learners() {
     // Export the Users to PDF file
     const handleDownloadPDF = async () => {
         const blob = await pdf(
-            <ExportPDF users={users} />
+            <ExportPDF users={users} activeUser={activeUser} />
         ).toBlob();
 
         const url = URL.createObjectURL(blob);
@@ -213,7 +217,7 @@ function Learners() {
                                             <td className="text-start border border-gray-300 px-4 py-[4px] capitalize">{user.role}</td>
                                             <td className="text-start border border-gray-300 px-4 py-[4px]">{user.email}</td>
                                             <td className="text-center border border-gray-300 px-4 py-[4px]">
-                                                <Link to={`/learners/${user.id}`} className="flex justify-start text-blue-600 hover:underline">
+                                                <Link to={`/accounts/${user.id}`} className="flex justify-start text-blue-600 hover:underline">
                                                     <FcAbout className="my-auto mr-[2px]" />
                                                     <p>{user.username}</p>
                                                 </Link>

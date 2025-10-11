@@ -4,12 +4,12 @@ import ManagerHome from "../Admin/ManagerHome";
 import DashboardAdminNavbar from "../../components/DashboardAdminNavbar";
 
 function ManagerDashboard() {
-    const [activeTab, setActiveTab] = useState('continuing')
+    const [activeTab, setActiveTab] = useState('manager home')
 
     // Switch Logic to determine the page to return
     const renderContent = () => {
         switch (activeTab) {
-            case 'course creation':
+            case 'manager home':
                 return < ManagerHome />;
             default:
                 return <ManagerHome />

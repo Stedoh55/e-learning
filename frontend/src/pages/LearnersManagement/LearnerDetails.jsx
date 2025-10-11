@@ -24,7 +24,7 @@ function LearnerDetails() {
             <LearnersManagementNavbar/>
             <div className="mt-[14px] mx-[12px]">
                 <div className="flex justify-start">
-                    <Link to="/learners" className="rounded-[6px] bg-green-400 my-auto mr-[20px]">
+                    <Link to="/accounts" className="rounded-[6px] bg-green-400 my-auto mr-[20px]">
                         <p className="my-0 px-[20px] py-[4px] font-[700]">Back</p>
                     </Link>
                     <p className="capitalize my-auto font-[700] text-[20px]">{user.role} details</p>

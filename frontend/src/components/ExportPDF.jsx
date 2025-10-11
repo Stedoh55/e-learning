@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
         borderColor: "#ccc",
         padding: 5,
         textAlign: "left",
+        fontWeight: 700,
     },
     tableRow: {
         flexDirection: "row",
@@ -71,7 +72,7 @@ const styles = StyleSheet.create({
 
 const downloadTime = new Date().toLocaleString();
 
-const ExportPDF = ({ActiveUser, users}) =>(
+const ExportPDF = ({activeUser, users}) =>(
         <Document>
         <Page size="A4" style={styles.page}>
             {/* Header */}
@@ -111,7 +112,7 @@ const ExportPDF = ({ActiveUser, users}) =>(
 
             {/* Footer */}
             <View style={styles.footer}>
-                <Text>Downloaded by: {ActiveUser}</Text>
+                <Text>Downloaded by: {activeUser.first_name} {activeUser.last_name}</Text>
                 <Text>Retrieved from the system: { downloadTime}</Text>
             </View>
             </Page>

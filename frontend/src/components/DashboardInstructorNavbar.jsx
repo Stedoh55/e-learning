@@ -1,6 +1,7 @@
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { PiUserCircleFill, PiGraduationCap } from "react-icons/pi";
 import { LuNotebookText } from "react-icons/lu";
+import { FaUsers } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react"
 import { getCurrentUser } from "../api/CurrentUser";
@@ -61,9 +62,9 @@ function DashboardInstructorNavbar({activeTab, onChange}) {
                             <LuNotebookText className=" text-[24px] font-[700] my-auto w-full" />
                             <p className="text-[16px] font-[700] mb-0">My Orders</p>
                         </div>
-                        <Link to='/learners' id="Learners-block" class="mr-3 my-auto w-fit">
-                            <PiGraduationCap className=" text-[24px] font-[700] my-auto w-full" />
-                            <p className="text-[16px] font-[700] mb-0">Learners</p>
+                        <Link to='/accounts' id="Learners-block" class="mr-3 my-auto w-fit">
+                            <FaUsers className=" text-[24px] font-[700] my-auto w-full" />
+                            <p className="text-[16px] font-[700] mb-0">Users</p>
                         </Link>
                     </div>
                 </div>
