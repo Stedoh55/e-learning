@@ -8,8 +8,8 @@ function InstructorHome() {
 
     return (
         <section className="InstuctorHome mx-[12px]">
-            <div className="HomeHeader mt-[14px]">
-                <h1 className="text-[22px] font-[700] text-[#1cdf1c]">Welcome Back Instructor!</h1>
+            <div className="px-3 py-[10px]  mt-[16px] bg-gradient-to-l from-[#1cdf1c] to-white rounded-[10px] border-solid border-[1px]">
+                <p className="text-[18px] font-[700] [text-shadow:_1px_1px_3px_rgba(0,0,0,0.4)] ">Welcome Back Instructor!</p>
             </div>
             <div className="flex justify-between mt-[14px]">
                 <div className="w-[70%]">

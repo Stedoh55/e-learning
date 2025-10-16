@@ -8,7 +8,6 @@ import Footer from "../../components/Footer"
 import Loader from "../../components/Loader"
 
 function LearnerDetails() {
-   
     const { id } = useParams();
     const [user, setUser] = useState(null);
 

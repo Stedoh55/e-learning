@@ -2,8 +2,12 @@ import { IoMdNotificationsOutline } from "react-icons/io";
 import { PiUserCircleFill, PiGraduationCap } from "react-icons/pi";
 import { LuNotebookText } from "react-icons/lu";
 import { Link } from "react-router-dom";
+import moment from 'moment';
 
 function Navbar() {
+    // Today's Date
+    const today = moment().format("dddd, Do of MMMM, YYYY");
+    
     return (
         <section className="Navbar sticky top-0 z-50 bg-white text-bg-light p-2 pd-4 border-solid border-[0.5px] border-[#adb5bd] mx-0 border-bottom">
             <div>
@@ -55,33 +59,31 @@ function Navbar() {
                     </div>
                 </div>
                 {/* Lower links */}
-                <div className="LowerLinks flex justify-start">
-                    <div className="mr-3 mt-2">
-                        <Link to="/" className="navbar-lowerlinks">All Categories</Link>
+                <div className="flex justify-between">
+                    <div className="LowerLinks flex justify-start">
+                        <div className="mr-3 mt-2">
+                            <Link to="/" className="navbar-lowerlinks">Home</Link>
+                        </div>
+                        <div className="mr-3 mt-2">
+                            <Link to="/" className="navbar-lowerlinks">About</Link>
+                        </div>
+                        <div className="mr-3 mt-2">
+                            <Link to="/courses" className="navbar-lowerlinks">All Courses</Link>
+                        </div>
+                        <div className="mr-3 mt-2">
+                            <Link to="/dashboard" className="navbar-lowerlinks">Dashboard</Link>
+                        </div>
+                        <div className="mr-3 mt-2">
+                            <Link to="/" className="navbar-lowerlinks">Account</Link>
+                        </div>
+                        <div className="mr-3 mt-2">
+                            <Link to="/" className="navbar-lowerlinks">Docs</Link>
+                        </div>
                     </div>
-                    <div className="mr-3 mt-2">
-                        <Link to="/" className="navbar-lowerlinks">Home</Link>
-                    </div>
-                    <div className="mr-3 mt-2">
-                        <Link to="/" className="navbar-lowerlinks">Continuing</Link>
-                    </div>
-                    <div className="mr-3 mt-2">
-                        <Link to="/" className="navbar-lowerlinks">All Categories</Link>
-                    </div>
-                    <div className="mr-3 mt-2">
-                        <Link to="/" className="navbar-lowerlinks">Completed</Link>
-                    </div>
-                    <div className="mr-3 mt-2">
-                        <Link to="/" className="navbar-lowerlinks">All Courses</Link>
-                    </div>
-                    <div className="mr-3 mt-2">
-                        <Link to="/" className="navbar-lowerlinks">Assignments</Link>
-                    </div>
-                    <div className="mr-3 mt-2">
-                        <Link to="/" className="navbar-lowerlinks">Account</Link>
-                    </div>
-                    <div className="mr-3 mt-2">
-                        <Link to="/" className="navbar-lowerlinks">Docs</Link>
+                    <div className="flex justify-between  mt-2">
+                        <p className=" navbar-lowerlinks mr-3">
+                           - - - -</p>
+                        <p className="navbar-lowerlinks text-red-600">{today}</p>
                     </div>
                 </div>
             </div>
